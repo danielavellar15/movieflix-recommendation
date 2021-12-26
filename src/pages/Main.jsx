@@ -11,7 +11,7 @@ export default function MainPage() {
 	return (
 		<>
 			<Title>MovieFlix</Title>
-			<List></List>
+			<List listTitle="Mais vistos"></List>
 		</>
 	);
 }

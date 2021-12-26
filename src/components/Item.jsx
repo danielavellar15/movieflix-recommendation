@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import theMovieDb from "../lib/themoviedb-javascript-library/themoviedb";
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.button`
 	width: 200px;
 	height: 300px;
 	background-color: white;
@@ -15,10 +17,37 @@ const ItemImage = styled.img`
 `;
 
 const Item = (props) => {
+	const [movie, setMovie] = useState({});
+	const { itemDetails } = props;
+	let history = useHistory();
+
+	useEffect(() => {
+		getMovieDetails(itemDetails.tmdbId);
+	}, [itemDetails.tmdbId]);
+
+	const getMovieDetails = function (itemId) {
+		theMovieDb.movies.getById(
+			{ id: itemId },
+			(movie_return) => {
+				//console.log("movie :>> ", movie_return);
+				setMovie(JSON.parse(movie_return));
+			},
+			(error) => {
+				console.log("error :>> ", error);
+			}
+		);
+	};
+
+	function handleOnClick() {
+		history.push("/movie", {
+			details: movie,
+		});
+	}
+
 	return (
 		<>
-			<ItemContainer>
-				<ItemImage src="https://img.olhardigital.com.br/wp-content/uploads/2021/11/MATRIX-RESURRECTIONS-691x1024.jpg"></ItemImage>
+			<ItemContainer onClick={handleOnClick}>
+				<ItemImage src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}></ItemImage>
 			</ItemContainer>
 		</>
 	);

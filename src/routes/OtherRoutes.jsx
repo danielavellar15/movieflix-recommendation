@@ -2,13 +2,13 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 // pages
+import Details from "../pages/Details";
 import Main from "../pages/Main";
 
 function OtherRoutes() {
 	return (
 		<Switch>
-			{/* <Route exact key={route.to} path={route.to} component={route.page} />; */}
-
+			<Route exact path="/movie" component={Details} />
 			<Route component={Main} />
 		</Switch>
 	);

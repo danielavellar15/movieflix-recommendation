@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { api } from "../config/apiBD";
 import theMovieDb from "../lib/themoviedb-javascript-library/themoviedb";
 
 const ItemContainer = styled.button`
 	width: 200px;
-	height: 300px;
+	height: fit-content;
 	background-color: white;
 	margin-right: 20px;
 	border-radius: 3px;
+	padding: 0px;
+	border: 0px;
 `;
 
 const ItemImage = styled.img`
 	width: 100%;
-	height: 100%;
 `;
 
 const Item = (props) => {
@@ -22,20 +24,21 @@ const Item = (props) => {
 	let history = useHistory();
 
 	useEffect(() => {
-		getMovieDetails(itemDetails.tmdbId);
-	}, [itemDetails.tmdbId]);
+		getMovieDetails(itemDetails.id_origin);
+	}, [itemDetails.id_origin]);
 
 	const getMovieDetails = function (itemId) {
-		theMovieDb.movies.getById(
-			{ id: itemId },
-			(movie_return) => {
-				//console.log("movie :>> ", movie_return);
-				setMovie(JSON.parse(movie_return));
-			},
-			(error) => {
-				console.log("error :>> ", error);
-			}
-		);
+		api.get("/movies?id=" + itemId).then(function (response) {
+			theMovieDb.movies.getById(
+				{ id: response.data[0].tmdbId },
+				(movie_return) => {
+					setMovie(JSON.parse(movie_return));
+				},
+				(error) => {
+					console.log("error :>> ", error);
+				}
+			);
+		});
 	};
 
 	function handleOnClick() {

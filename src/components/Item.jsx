@@ -6,7 +6,6 @@ import theMovieDb from "../lib/themoviedb-javascript-library/themoviedb";
 
 const ItemContainer = styled.button`
 	width: 200px;
-	height: fit-content;
 	background-color: white;
 	margin-right: 20px;
 	border-radius: 3px;
@@ -16,7 +15,11 @@ const ItemContainer = styled.button`
 
 const ItemImage = styled.img`
 	width: 100%;
+	height: 100%;
 `;
+
+const urlBaseImg = "https://image.tmdb.org/t/p/w500";
+const urlMovie = "/movies";
 
 const Item = (props) => {
 	const [movie, setMovie] = useState({});
@@ -28,7 +31,7 @@ const Item = (props) => {
 	}, [itemDetails.id_origin]);
 
 	const getMovieDetails = function (itemId) {
-		api.get("/movies?id=" + itemId).then(function (response) {
+		api.get(urlMovie + "?id=" + itemId).then(function (response) {
 			theMovieDb.movies.getById(
 				{ id: response.data[0].tmdbId },
 				(movie_return) => {
@@ -50,7 +53,7 @@ const Item = (props) => {
 	return (
 		<>
 			<ItemContainer onClick={handleOnClick}>
-				<ItemImage src={"https://image.tmdb.org/t/p/w500" + movie.poster_path}></ItemImage>
+				<ItemImage src={urlBaseImg + movie.poster_path}></ItemImage>
 			</ItemContainer>
 		</>
 	);

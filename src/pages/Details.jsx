@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import List from "../components/List";
+import ListRecommendation from "../components/ListRecommendation";
 
 const Container = styled.div`
-	padding: 10px;
+	padding: 20px;
 	color: #ffffff;
 `;
 const TitlePage = styled.h1`
@@ -49,31 +49,34 @@ const GenresMovie = styled.span`
 
 const DescriptionMovie = styled.p``;
 const DateMovie = styled.p``;
+const urlBaseImg = "https://image.tmdb.org/t/p/w500";
 
 export default function Details(props) {
 	const { details } = props.location.state;
 	return (
-		<Container>
-			<Header></Header>
-			<TitlePage>Detalhes</TitlePage>
-			<DetailsContainer>
-				<FolderMovieContainer>
-					<FolderMovie src={"https://image.tmdb.org/t/p/w500" + details.poster_path} />
-				</FolderMovieContainer>
-				<DetailsTextContainer>
-					<TitleMovie>
-						{details.original_title} <ReviewMovie>{details.vote_average}</ReviewMovie>
-					</TitleMovie>
-					<DescriptionMovie>
-						<b>Sinopse: </b>
-						{details.overview}
-					</DescriptionMovie>
-					<DateMovie>
-						<b>Data de Lançamento: </b> {details.release_date}
-					</DateMovie>
-				</DetailsTextContainer>
-			</DetailsContainer>
-			<List listTitle="Relacionados"></List>
-		</Container>
+		<>
+			<Container>
+				<Header></Header>
+				<TitlePage>Detalhes</TitlePage>
+				<DetailsContainer>
+					<FolderMovieContainer>
+						<FolderMovie src={urlBaseImg + details.poster_path} />
+					</FolderMovieContainer>
+					<DetailsTextContainer>
+						<TitleMovie>
+							{details.original_title} <ReviewMovie>{details.vote_average}</ReviewMovie>
+						</TitleMovie>
+						<DescriptionMovie>
+							<b>Sinopse: </b>
+							{details.overview}
+						</DescriptionMovie>
+						<DateMovie>
+							<b>Data de Lançamento: </b> {details.release_date}
+						</DateMovie>
+					</DetailsTextContainer>
+				</DetailsContainer>
+				<ListRecommendation listTitle="Você pode gostar também" limit="7"></ListRecommendation>
+			</Container>
+		</>
 	);
 }

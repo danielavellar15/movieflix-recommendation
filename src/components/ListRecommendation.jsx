@@ -11,42 +11,30 @@ const ListFlex = styled.div`
 `;
 
 const ListContainer = styled.div`
-	height: 250px;
-	padding: 10px;
+	padding: 0px;
 `;
 
 const ListTitle = styled.h2`
 	color: white;
 `;
 
-const List = (props) => {
+const ListRecommendation = (props) => {
 	const [details, setDetails] = useState([]);
 
+	const { listTitle, limit } = props;
+
 	useEffect(() => {
-		getRecommendation(2, null).then((result) => {
+		getRecommendation(null, limit).then((result) => {
 			if (result) {
 				setDetails(result.data);
 			}
 		});
 	}, [props]);
 
-	// const details = [
-	// 	{
-	// 		id: 3,
-	// 		imdbId: "0113228",
-	// 		tmdbId: 15602,
-	// 	},
-	// 	{
-	// 		id: 1,
-	// 		imdbId: "0114709",
-	// 		tmdbId: 862,
-	// 	},
-	// ];
-
 	return (
 		<>
 			<ListContainer>
-				<ListTitle> {props.listTitle} </ListTitle>
+				<ListTitle> {listTitle} </ListTitle>
 				<ListFlex>
 					{details.map((item) => {
 						return <Item key={item.id} itemDetails={item}></Item>;
@@ -57,4 +45,4 @@ const List = (props) => {
 	);
 };
 
-export default List;
+export default ListRecommendation;

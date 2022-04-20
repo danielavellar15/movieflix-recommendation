@@ -1,24 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import Header from "../components/Header";
-import List from "../components/List";
+import ListRecommendation from "../components/ListRecommendation";
 
 export const Title = styled.h1`
 	color: #e50914;
 	margin-left: 10px;
 `;
 
+export const Container = styled.div`
+	padding: 20px;
+`;
+
 export default function MainPage() {
 	return (
-		<>
+		<Container>
 			<Header></Header>
-			<List listTitle="Mais vistos"></List>
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<List listTitle="Novidades"></List>
-		</>
+			<ListRecommendation listTitle="Melhores do mês" limit="6"></ListRecommendation>
+			<ListRecommendation listTitle="Com base no seu histórico" limit="6"></ListRecommendation>
+		</Container>
 	);
 }
